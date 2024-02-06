@@ -8,66 +8,75 @@ const app = express();
 const port = 8000;
 
 const largeImages = [
-    'https://media.discordapp.net/attachments/1199262650912219146/1199270818274869278/7bde30a066c2e80b.gif?ex=65c1eefc&is=65af79fc&hm=de2645a9b516429600db0552213605962b99c3acd7537ff3cfc92ae76ed7b07f&=',
+    'https://media.discordapp.net/attachments/1204390908293021746/1204422686785409085/sejinming-korean_1.gif?ex=65d4ad09&is=65c23809&hm=075d95d5f07fcd690edd4886f65755b88441741cdab6b2f839487ef6a871973c&=',
+    'https://media.discordapp.net/attachments/1204390908293021746/1204422687301042286/sejinming-korean_2.gif?ex=65d4ad09&is=65c23809&hm=a1f9013bb531b1745b1270ece41b59b9ee5cdb8d007079eff907c23c7d45574e&='
     // Add more large image URLs as needed
 ];
 
 const stateTexts = [
-    '「 𝙽𝙸𝙶𝙷𝚃 𝙸𝙽 𝚃𝙷𝙴 𝚂𝙺𝚈 」',
-    '「 𝚃𝙷𝙴 𝙾𝙽𝙻𝚈 𝙻𝙸𝙵𝙴 」',
-    '「 𝙹𝙾𝙸𝙽 𝙳𝙸𝚂𝙲𝙾𝚁𝙳 」',
+    '「 𝕀 𝕛𝕦𝕤𝕥 𝕨𝕒𝕟𝕟𝕒 𝕝𝕠𝕧𝕖 𝕪𝕠𝕦 𝕝𝕚𝕜𝕖 𝕀 𝕕𝕠  」'
     // Add more state texts as needed
 ];
+
+const nameTexts = [
+  '꒦꒷ 𝕐𝕠𝕦"𝕣𝕖 𝕤𝕨𝕖𝕖𝕥 𝕝𝕚𝕜𝕖 𝕔𝕒𝕟𝕕𝕪~ ♡'
+  // Add more state texts as needed
+];
+
 
 let currentStateIndex = 0; // Index to track the current state text
 
 let currentLargeImageIndex = 0;
 
+let currentnameTextsIndex = 0;
+
 app.get('/', (req, res) => res.send('ทำงานเรียบร้อยแล้ว'))
 app.listen(port, () =>
-    console.log(`Your app is listening at http://localhost:${port}`)
+  console.log(`Your app is listening at http://localhost:${port}`)
 );
 
 client.on("ready", async () => {
-    var startedAt = Date.now();
-    console.log(`${client.user.username} เม็ดม่วงทำงานเรียบร้อยแล้ว !`);
+  var startedAt = Date.now();
+  console.log(`${client.user.username} เม็ดม่วงทำงานเรียบร้อยแล้ว !`);
 
-    setInterval(() => {
-        const currentTime = getCurrentTime();
-        const currentDate = getCurrentDate();
+  setInterval(() => {
+      const currentTime = getCurrentTime();
+      const currentDate = getCurrentDate();
 
-        const r = new Discord.RichPresence()
-            .setApplicationId('1121867777867788309')
-            .setType('STREAMING')
-            .setState(stateTexts[currentStateIndex])
-            .setName('۞ 𝙰𝚂𝚃𝚁𝙾 𝙵𝙰𝙼')
-            .setDetails(` ﹝ ⌚${currentTime} | 🖤 Ka  Ting - 𝓐$t๏r ﹞ `)
-            .setStartTimestamp(startedAt)
-            .setAssetsLargeText(`﹝ 📅 ${currentDate}  |  🛸 0 m/s ﹞`)
-            .setAssetsLargeImage(largeImages[currentLargeImageIndex])
-            .setAssetsSmallText('A$t๏r 🖤')
-            .addButton('🆔 Ting-𝓐$t๏r 👻  🛜', 'https://wetv.vip/th')
-            .addButton('🔱 👑  A$t๏r  👑 🔱', 'https://www.twitch.tv/discord')
+      const r = new Discord.RichPresence()
+          .setApplicationId('1121867777867788309')
+          .setType('STREAMING')
+          .setURL('https://youtu.be/sVaQQRx6-es?si=WddbMqrjlhmF6kF8')
+          .setState(stateTexts[currentStateIndex])
+          .setName(nameTexts[currentnameTextsIndex])
+          .setDetails(` ﹝ ⌚ ${currentTime} | 💬 ${client.user.username} ﹞ `)
+          .setStartTimestamp(startedAt)
+          .setAssetsLargeText(`﹝ 📅 ${currentDate}  | 🛸 0 m/s ﹞`)
+          .setAssetsLargeImage(largeImages[currentLargeImageIndex])
+          .setAssetsSmallText('🦊')
+          .addButton('✧ My favorite song ~ ♡', 'https://youtu.be/MW79zgnSF40?si=tKU2OONAJNnR2c90')
+          .addButton('꒰🍰 ⤾ Where you at ~ ♡', 'https://youtu.be/sE1GQ6wM9qM?si=Afyeho2F6nfJ68Sc')
 
-        client.user.setActivity(r);
+      client.user.setActivity(r);
 
       currentLargeImageIndex = (currentLargeImageIndex + 1) % largeImages.length;
       currentStateIndex = (currentStateIndex + 1) % stateTexts.length;
-    }, 1000); // Change large image and state text every 1 second
+      currentnameTextsIndex = (currentnameTextsIndex + 1) % nameTexts.length;
+  }, 5000); // Change large image and state text every 1 second
 });
 
 function getCurrentDate() {
-    const a = new Date(Date.now());
-    const c = { timeZone: "Asia/Bangkok", day: "2-digit", month: "2-digit", year: "numeric" };
-    const formattedDate = a.toLocaleDateString("en-US", c);
-    const [month, day, year] = formattedDate.split('/');
-    return `${day}/${month}/${year}`;
+  const a = new Date(Date.now());
+  const c = { timeZone: "Asia/Bangkok", day: "2-digit", month: "2-digit", year: "numeric" };
+  const formattedDate = a.toLocaleDateString("en-US", c);
+  const [month, day, year] = formattedDate.split('/');
+  return `${day}/${month}/${year}`;
 }
 
 function getCurrentTime() {
-    const a = new Date(Date.now());
-    const c = { timeZone: "Asia/Bangkok", hour: "numeric", minute: "numeric", hour12: false };
-    return a.toLocaleTimeString("th-TH", c);
+  const a = new Date(Date.now());
+  const c = { timeZone: "Asia/Bangkok", hour: "numeric", minute: "numeric", hour12: false };
+  return a.toLocaleTimeString("th-TH", c);
 }
 
 client.login(process.env.token);
