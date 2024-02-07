@@ -46,7 +46,7 @@ client.on("ready", async () => {
       const r = new Discord.RichPresence()
           .setApplicationId('1121867777867788309')
           .setType('STREAMING')
-          .setURL('https://www.youtube.com/watch?si=WddbMqrjlhmF6kF8&v=sVaQQRx6-es&feature=youtu.be')
+          .setURL('https://www.youtube.com/watch?v=sVaQQRx6-es')
           .setState(stateTexts[currentStateIndex])
           .setName(nameTexts[currentnameTextsIndex])
           .setDetails(` ﹝ ⌚ ${currentTime} | 💬 ${client.user.username} ﹞ `)
