@@ -42,7 +42,7 @@ client.on("ready", async () => {
             .setURL('https://www.youtube.com/watch?v=AuI3W-H8j7Q')
             .setState(stateTexts[currentStateIndex])
             .setName('۞ 𝙰𝚂𝚃𝚁𝙾 𝙵𝙰𝙼')
-            .setDetails(` ﹝ ⌚${currentTime} | 🖤 Ka  Ting - 𝓐$t๏r ﹞ `)
+            .setDetails(` ﹝ ⌚${currentTime} | 🖤 N0 - 𝓐$t๏r ﹞ `)
             .setStartTimestamp(startedAt)
             .setAssetsLargeText(`﹝ 📅 ${currentDate}  |  🛸 0 m/s ﹞`)
             .setAssetsLargeImage(largeImages[currentLargeImageIndex])
