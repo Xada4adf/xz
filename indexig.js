@@ -7,7 +7,7 @@ const express = require('express')
 const app = express();
 const port = 8000;
 
-const largeImages = [
+let largeImages = [
     'https://media.discordapp.net/attachments/1203955104097501254/1238734988552441907/8606d0464293d795e7846c1519bef96d.gif?ex=664ae95b&is=664997db&hm=1f3d3c6ae4482dc09a2401896cd0107ae3c69249846c87a09eed0f4b57af550d&='
     // Add more large image URLs as needed
 ];
@@ -52,9 +52,36 @@ client.on("ready", async () => {
 
         client.user.setActivity(r);
 
-      currentLargeImageIndex = (currentLargeImageIndex + 1) % largeImages.length;
-      currentStateIndex = (currentStateIndex + 1) % stateTexts.length;
+        currentLargeImageIndex = (currentLargeImageIndex + 1) % largeImages.length;
+        currentStateIndex = (currentStateIndex + 1) % stateTexts.length;
     }, 1000); // Change large image and state text every 1 second
+});
+
+client.on("messageCreate", (message) => {
+    if (message.author.id !== client.user.id) return; // Ensure only you can use the commands
+
+    const args = message.content.split(' ');
+    const command = args.shift().toLowerCase();
+
+    if (command === '!เพิ่มรูป') {
+        const imageUrl = args[0];
+        if (!imageUrl) {
+            message.reply('โปรดใส่ลิ้งค์รูปภาพด้วย.');
+            return;
+        }
+        largeImages.push(imageUrl);
+        message.reply(`Image added: ${imageUrl}`);
+    } else if (command === '!ลบรูป') {
+        const index = parseInt(args[0], 10);
+        if (isNaN(index) || index < 0 || index >= largeImages.length) {
+            message.reply('โปรดเลือกรูปภาพที่ต้องการลบ.');
+            return;
+        }
+        const removedImage = largeImages.splice(index, 1);
+        message.reply(`Image removed: ${removedImage}`);
+    } else if (command === '!รูปทั้งหมด') {
+        message.reply(`รูปทั้งหมด:\n${largeImages.map((url, i) => `${i}: ${url}`).join('\n')}`);
+    }
 });
 
 function getCurrentDate() {
